@@ -1,13 +1,18 @@
-import { FC } from 'react'
+import { FC, useContext } from 'react'
 import Nav from './components/Nav';
+import Footer from './components/Footer';
+import { ThemeContext } from './context/ThemeProvider';
 
 interface AppProps {}
 
 const App: FC<AppProps> = () => {
-  return <div>
+
+  const { theme } = useContext(ThemeContext)
+
+  return <div className='app' data-theme={theme}>
     <Nav/>
     <main></main>
-    <footer></footer>
+    <Footer></Footer>
   </div>;
 };
 
