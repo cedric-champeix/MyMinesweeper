@@ -1,14 +1,23 @@
-export class Minesweeper {
-    private board: Array<number>;
-    private size: number;
+export enum Size {
+    SMALL = 9,
+    MEDIUM = 15,
+    LARGE = 25
+}
 
-    constructor(size: number = 10) {
-        this.size = size
-        this.board = new Array<number>(size)
+export class Minesweeper {
+    
+    private _board: Array<number>;
+    private _size: number;
+
+    constructor(size: number = Size.MEDIUM) {
+        this._size = size
+        this._board = new Array<number>(size)
+
+        this.generateBoard()
     }
 
     private getIndex(x: number, y: number): number {
-        return x + this.size * y
+        return x + this._size * y
     }
 
     private isBomb(): boolean {
@@ -38,32 +47,42 @@ export class Minesweeper {
         return nb;
     }
 
-    generateBoard() {
-        for (let y = 0; y < this.size; y++) {
-            for (let x = 0; x < this.size; x++) {
-                if (this.isBomb()) {
+    private generateBoard() {
+        for (let y = 0; y < this._size; y++) {
+            for (let x = 0; x < this._size; x++) {
+                if (this.isBomb())
                     this.board[this.getIndex(x, y)] = -1
-                }
             }
         }
 
-        for (let y = 0; y < this.size; y++) {
-            for (let x = 0; x < this.size; x++) {
+        for (let y = 0; y < this._size; y++) {
+            for (let x = 0; x < this._size; x++) {
                 const index = this.getIndex(x, y)
                 if (this.board[index] !== -1)
                     this.board[index] = this.calcNbBomb(x, y)
             }
         }
-        
     }
 
-    displayBoard() {
-        for (let y = 0; y < this.size; y++) {
-            let line = ""
-            for (let x = 0; x < this.size; x++) {
-                line += this.board[this.getIndex(x, y)] + " "
-            }
-            console.log(line);
-        }
+    public playIndex(x: number): boolean {
+        console.log("INDEX: ", x);
+
+        if (this._board[x] === -1)
+            return false
+
+        return true
     }
+
+    public get board(): Array<number> {
+        return this._board;
+    }
+
+    public get size(): number {
+        return this._size;
+    }
+
+    public set size(size: Size) {
+        this._size = size;
+    }
+    
 }

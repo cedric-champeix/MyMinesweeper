@@ -1,14 +1,11 @@
 import { createContext, FC, ReactNode } from "react";
 import useLocalStorage from "use-local-storage";
 
-console.log("hey");
-
-
 type ThemeContextType = "light" | "dark";
 
 interface ThemeContextProps {
     theme: ThemeContextType,
-    toggleTheme: Function
+    toggleTheme: () => void
 }
 
 export const ThemeContext = createContext<ThemeContextProps>({theme: 'light', toggleTheme: () => {}})
